@@ -213,6 +213,19 @@ tempCodeRunnerFile.py
 
 # Marimo
 marimo/_static/
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.toc
+
+# Sistema
+.DS_Store
+Thumbs.db
 marimo/_lsp/
 __marimo__/
 
