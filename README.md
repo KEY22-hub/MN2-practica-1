@@ -1,2 +1,7 @@
 # MN2-practica-1
-Repositori on mostrar el codi i progrés del treball del grup en la realització de la pràctica 1 de l'assignatura de Métodes Numérics 2.
+
+Assignatura de mètodes numerics II de 3r de carrera de física, primera pràctica de phyton.
+
+En aquest repositori es mostrarà el procés de creació del codi utilitzat per solucionar el/els problemes proposats a la pràctica 1 de l'assignatura MN2, del grau de física a la UAB.
+
+Es un treball continu en grup, els membres del qual son: Martí Cornacchione, Paula López i Mark Krakkai.
