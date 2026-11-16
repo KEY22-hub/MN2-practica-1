@@ -19,11 +19,11 @@ plt.rcParams.update({
 
     # tipus de lletra
     "font.family": "serif",
-    "font.serif": ["cmr10", "DejaVu Serif"],
+    "font.serif": ["STIXGeneral", "DejaVu Serif"],
 
     # Fa que les fórmules entre $...$ (per exemple \hat{x}) es dibuixin amb la
     # mateixa tipografia que les de LaTeX, sense necessitar tenir LaTeX instal·lat.
-    "mathtext.fontset": "cm",
+    "mathtext.fontset": "stix",
 
     # Fa que els números dels eixos també es dibuixin amb la tipografia
     # matemàtica. Sense això, amb cmr10 el signe menys surt malament.
