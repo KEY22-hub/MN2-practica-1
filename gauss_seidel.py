@@ -58,21 +58,3 @@ def multiplica_tridiagonal(a, b, c, x):
     y[1:] += a[1:] * x[:-1]
     y[:-1] += c[:-1] * x[1:]
     return y
-
-
-if __name__ == "__main__":
-    # Prova: matriu com la d'Euler implícit, amb solució coneguda x_ver.
-    n = 99          # punts interiors amb N = 101
-    gamma = 1.0     # el cas Δt = (Δx)^2
-
-    a = np.full(n, -gamma)
-    b = np.full(n, 1 + 2 * gamma)
-    c = np.full(n, -gamma)
-
-    rng = np.random.default_rng(0)
-    x_ver = rng.random(n)
-    d = multiplica_tridiagonal(a, b, c, x_ver)
-
-    x, n_iter = gauss_seidel(a, b, c, d, x0=np.zeros(n))
-    print(f"Iteracions: {n_iter}")
-    print(f"Error màxim respecte de la solució exacta: {np.max(np.abs(x - x_ver)):.2e}")
