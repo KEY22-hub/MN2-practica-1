@@ -77,18 +77,3 @@ def desa(fig, nom):
     ruta = os.path.join(CARPETA_FIGURES, nom + ".pdf")
     fig.savefig(ruta)
     return ruta
-
-
-if __name__ == "__main__":
-    # Gràfica de prova: la solució estacionària x(1-x)/2, que és una paràbola
-    # amb màxim 1/8 a x = 0.5. Serveix per comprovar que l'estil queda bé i
-    # que la mida de lletra quadra amb el text un cop inserida a LaTeX.
-    import numpy as np
-
-    x = np.linspace(0, 1, 101)
-    fig, ax = plt.subplots()
-    ax.plot(x, x * (1 - x) / 2, label=r"$\hat{T}_\mathrm{est}$")
-    ax.set_xlabel(r"$\hat{x}$")
-    ax.set_ylabel(r"$\hat{T}$")
-    ax.legend()
-    print("Figura desada a", desa(fig, "prova_estil"))
