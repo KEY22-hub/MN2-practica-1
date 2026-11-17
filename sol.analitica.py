@@ -1,14 +1,7 @@
-#discretització espaciotemporal
 
-#la edp que volem resoldre és df/dt = d^2f/dx^2 + p
-#aproximem les derivades com df/dt=(f_(m+1) - f_(m))/(dt)  i   d^2f/dx^2 = (f(i-1)-2f(i)+f(i+1))/(dx^2)
-#on els index m es refereixen als passos temporals i els index i als espacials.
+#S'ha resolt analíticament utilitzant l'annex del guió. La solució analítica conté un sumatori infinit que ve d'expandir en serie de fourier 
+# la funció solució i les seves derivades, es trunca aquest sumatori al terme N-èssim.
 
-#definim r com (reordenant l'edp separant els passos de temps de manera que tinguem 
-# la funció futura en funció de la passada es veu que és convenient definir-ho així):
-
-
-#Creem la matriu A que descriu com evoluciona cada punt del teixit a cada pas temporal
 
 import matplotlib.pyplot as plt
 import numpy as np
