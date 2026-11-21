@@ -74,12 +74,12 @@ if __name__ == "__main__":
     ]
 
     fig, ax = plt.subplots(figsize=(8, 5))
-ax.plot(
+    ax.plot(
     llista_n,
     llista_error,
     marker="o",
     label=r"$\max_{\hat{x}} |\hat{T}_{n}(\hat{x}, \hat{t}_{\text{gran}}) - \hat{T}_{\text{est}}(\hat{x})|$",
-)
+    )
 
 
 

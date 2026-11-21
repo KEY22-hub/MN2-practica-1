@@ -15,7 +15,7 @@ Solució proposada al guió:
 
 import numpy as np
 
-from paramatres import (
+from figures.parametres import (
     N,
     T_hat_limit,
     T_hat_mort,
