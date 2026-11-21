@@ -1,7 +1,7 @@
 
 
 import numpy as np
-from gauss_seidel import gauss_seidel
+from figures.gauss_seidel import gauss_seidel
 
 """
 Apliquem el mètode de Crank-Nicolson a l'equació de la calor ja adimensionalitzada:
@@ -71,7 +71,7 @@ if __name__ == "__main__":
 
     # Si el company ja ha fet analitica.py, també dibuixem l'error.
     try:
-        from analitica import T_analitica
+        from figures.analitica import T_analitica
         hi_ha_analitica = True
     except ImportError:
         hi_ha_analitica = False
