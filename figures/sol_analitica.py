@@ -83,30 +83,30 @@ if __name__ == "__main__":
 
 
 
-ax.set_xlabel("Nombre de termes de Fourier")
-ax.set_ylabel("Error absolut màxim")
-ax.set_title(
-    f"error de truncament (t = {t_gran})"
-)
-ax.grid(True, linestyle=":", alpha=0.6)
-ax.legend()
+    ax.set_xlabel("Nombre de termes de Fourier")
+    ax.set_ylabel("Error absolut màxim")
+    ax.set_title(
+        f"error de truncament (t = {t_gran})"
+    )
+    ax.grid(True, linestyle=":", alpha=0.6)
+    ax.legend()
 
-plt.tight_layout()
-plt.show()
-
-
+    plt.tight_layout()
+    plt.show()
 
 
-# Gràfica 3D de l'evolució temporal de la temperatura en cada punt (x) del teixit
-t = np.linspace(0, t_a, 100)
-X, T_mesh = np.meshgrid(x, t)
-F = np.array([T_analitica(x, ti) for ti in t])
 
-fig = plt.figure(figsize=(10, 6))
-ax = fig.add_subplot(111, projection="3d")
-ax.plot_surface(X, T_mesh, F, cmap="viridis")
-ax.set_xlabel(r"$\hat{x}$")
-ax.set_ylabel(r"$\hat{t}$")
-ax.set_zlabel(r"$\hat{T}$")
-plt.show()
+
+    # Gràfica 3D de l'evolució temporal de la temperatura en cada punt (x) del teixit
+    t = np.linspace(0, t_a, 100)
+    X, T_mesh = np.meshgrid(x, t)
+    F = np.array([T_analitica(x, ti) for ti in t])
+
+    fig = plt.figure(figsize=(10, 6))
+    ax = fig.add_subplot(111, projection="3d")
+    ax.plot_surface(X, T_mesh, F, cmap="viridis")
+    ax.set_xlabel(r"$\hat{x}$")
+    ax.set_ylabel(r"$\hat{t}$")
+    ax.set_zlabel(r"$\hat{T}$")
+    plt.show()
     
