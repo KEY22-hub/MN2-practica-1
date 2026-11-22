@@ -17,7 +17,7 @@ dx = 1 / (N - 1)
 x = np.linspace(0, 1, N)
 T_ana = T_analitica(x, t_a)
 
-# Els tres mètodes amb el nom per a la llegenda, el color i el marcador.
+# Els tres mètodes amb el nom per a la llegenda, el color i el marcador (com surtiran als gràfics).
 # Així els dos bucles de sota poden recórrer els tres mètodes de la mateixa manera.
 metodes = [
     ("Euler explícit", resol_exp, "C3", "^"),
@@ -36,7 +36,7 @@ fig1, ax1 = plt.subplots()
 for nom, resol, color, marcador in metodes:
     _, T_num = resol(N, dt_comu, t_a)
     err = error(T_num, T_ana)
-    print(f"gamma = {gamma_comu}  {nom:15s}  error màxim = {err.max():.2e}")
+    print(f"gamma = {gamma_comu}  {nom}  error màxim = {err.max():.2e}")
 
     # A les fronteres l'error és exactament 0 i log(0) no existeix: les ometem
     ax1.semilogy(x[1:-1], err[1:-1], color=color, label=nom)
@@ -75,7 +75,7 @@ for nom, resol, color, marcador in metodes:
         dts.append(dt)
         errors_max.append(error(T_num, T_ana).max())
 
-    ax2.loglog(dts, errors_max, "-", color=color, marker=marcador, ms=4, label=nom)
+    ax2.loglog(dts, errors_max, "-", color=color, marker=marcador, ms=4, label=nom) # Fem servir escala logarítmica a ambdós eixos per evitar que es vegin les línes colapsades/molt juntes
 
 ax2.set_xlabel(r"$\Delta\hat{t}$")
 ax2.set_ylabel(r"$\max_j |\hat{T}_\mathrm{num} - \hat{T}_\mathrm{ana}|$")
