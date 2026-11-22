@@ -8,7 +8,7 @@ from euler_explicit import resol_exp
 from euler_imp import resol_imp
 from crank_nicolson import resol_cn
 
-# (a) Error punt a punt amb gamma = 0.5 per als tres mètodes:
+# Error punt a punt amb gamma = 0.5 per als tres mètodes:
 
 dx = 1 / (N - 1)
 
@@ -38,7 +38,7 @@ for nom, resol, color, marcador in metodes:
     err = error(T_num, T_ana)
     print(f"gamma = {gamma_comu}  {nom}  error màxim = {err.max():.2e}")
 
-    # A les fronteres l'error és exactament 0 i log(0) no existeix: les ometem
+    # A les fronteres l'error és exactament 0 i log(0) no existeix, les hem d'ometre
     ax1.semilogy(x[1:-1], err[1:-1], color=color, label=nom)
 
 ax1.set_xlabel(r"$\hat{x}$")
@@ -48,8 +48,8 @@ ax1.legend(loc="lower center")
 desa(fig1, "comparacio_error")
 
 
-# (b) Bucle sobre una llista de gammes: error màxim de cada mètode
-#     (l'explícit només si gamma <= 0.5), i gràfica en loglog
+# Bucle sobre una llista de gammes per l'error màxim de cada mètode
+# (l'explícit només si gamma <= 0.5)
 
 # Figura 2: error màxim de cada mètode en funció del pas de temps.
 # Per a cada gamma de la llista, resolem amb els tres mètodes i ens quedem
