@@ -81,7 +81,7 @@ if __name__ == "__main__":
     # Tres valors de dt / dx^2 per comparar el comportament del mètode implícit.
     x, T_025 = resol(N, 0.25 * dx**2, t_a)
     x, T_050 = resol(N, 0.50 * dx**2, t_a)
-    x, T_200 = resol(N, 2.00 * dx**2, t_a)
+    x, T_100 = resol(N, 1.00 * dx**2, t_a)
 
     # Solució exacta als mateixos punts x i al mateix temps t_a.
     T_ana = T_analitica(x, t_a)
@@ -90,13 +90,13 @@ if __name__ == "__main__":
     # la solució numèrica i l'analítica.
     err_025 = error(T_025, T_ana)
     err_050 = error(T_050, T_ana)
-    err_200 = error(T_200, T_ana)
+    err_100 = error(T_100, T_ana)
 
     # Mostrem per pantalla l'error més gran de cada cas, per comprovar
     # sense haver de mirar la gràfica.
     print("error màxim 0.25:", err_025.max())
     print("error màxim 0.50:", err_050.max())
-    print("error màxim 2.00:", err_200.max())
+    print("error màxim 1.00:", err_100.max())
 
     # Creem una figura amb 3 gràfiques una al costat de l'altra.
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(6.8, 2.4))
@@ -112,14 +112,14 @@ if __name__ == "__main__":
 
     # Gràfica (b): cas amb dt / dx^2 gran a part.
     ax2.plot(x, T_ana, "k-", label=r"$\hat{T}_\mathrm{ana}$")
-    ax2.plot(x, T_200, "^", color="C3", markevery=5, ms=3, label=r"$\gamma = 2.00$")
+    ax2.plot(x, T_100, "^", color="C3", markevery=5, ms=3, label=r"$\gamma = 2.00$")
     ax2.set_xlabel(r"$\hat{x}$")
     ax2.set_ylabel(r"$\hat{T}(\hat{x}, \hat{t}_a)$")
     ax2.legend(loc="lower center", ncol=2, columnspacing=1.0, handletextpad=0.4)
     ax2.text(0.04, 0.93, "(b)", transform=ax2.transAxes, ha="left", va="top")
 
     # Gràfica (c): els tres errors en escala logarítmica als punts interiors.
-    ax3.semilogy(x[1:-1], err_200[1:-1], color="C3", label=r"$\gamma = 2.00$")
+    ax3.semilogy(x[1:-1], err_100[1:-1], color="C3", label=r"$\gamma = 1.00$")
     ax3.semilogy(x[1:-1], err_050[1:-1], color="C0", label=r"$\gamma = 0.50$")
     ax3.semilogy(x[1:-1], err_025[1:-1], color="C2", label=r"$\gamma = 0.25$")
     ax3.set_xlabel(r"$\hat{x}$")
