@@ -20,7 +20,7 @@ from gauss_seidel import gauss_seidel
 
 # Aplicació del mètode d'Euler implícit amb Gauss-Seidel. Rep el nombre de punts (N),
 # el pas de temps (dt) i el temps final (t_a).
-def resol(N, dt, t_a, tol=1e-10, max_iter=10000):
+def resol_imp(N, dt, t_a, tol=1e-10, max_iter=10000):
 
     # Distància entre dos punts veïns. Hi ha N punts entre 0 i 1, per tant
     # N - 1 espais entre ells.
@@ -79,9 +79,9 @@ if __name__ == "__main__":
     dx = 1 / (N - 1)
 
     # Tres valors de dt / dx^2 per comparar el comportament del mètode implícit.
-    x, T_025 = resol(N, 0.25 * dx**2, t_a)
-    x, T_050 = resol(N, 0.50 * dx**2, t_a)
-    x, T_100 = resol(N, 1.00 * dx**2, t_a)
+    x, T_025 = resol_imp(N, 0.25 * dx**2, t_a)
+    x, T_050 = resol_imp(N, 0.50 * dx**2, t_a)
+    x, T_100 = resol_imp(N, 1.00 * dx**2, t_a)
 
     # Solució exacta als mateixos punts x i al mateix temps t_a.
     T_ana = T_analitica(x, t_a)

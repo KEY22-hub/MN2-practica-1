@@ -14,7 +14,7 @@ from estil_figures import desa
 
 # Aplicació del mètode d'Euler explícit. Rep el nombre de punts (N), el pas de temps (dt) i el temps
 # final (t_a).
-def resol(N, dt, t_a):
+def resol_exp(N, dt, t_a):
 
     # Distància entre dos punts veïns. Hi ha N punts entre 0 i 1, per tant
     # N - 1 espais entre ells.
@@ -73,9 +73,9 @@ if __name__ == "__main__":
     # Els tres casos de l'enunciat: dt = 0.51 dx^2, 0.49 dx^2 i 0.25 dx^2.
     # Cada crida retorna x (les posicions) i la temperatura a t = t_a.
     # La x és la mateixa als tres casos, per això es torna a escriure.
-    x, T_051 = resol(N, 0.51 * dx**2, t_a)
-    x, T_049 = resol(N, 0.49 * dx**2, t_a)
-    x, T_025 = resol(N, 0.25 * dx**2, t_a)
+    x, T_051 = resol_exp(N, 0.51 * dx**2, t_a)
+    x, T_049 = resol_exp(N, 0.49 * dx**2, t_a)
+    x, T_025 = resol_exp(N, 0.25 * dx**2, t_a)
 
     # Solució exacta als mateixos punts x i al mateix temps t_a.
     T_ana = T_analitica(x, t_a)
