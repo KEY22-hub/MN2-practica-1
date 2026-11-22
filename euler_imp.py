@@ -103,8 +103,8 @@ if __name__ == "__main__":
 
     # Gràfica (a): casos amb dt / dx^2 petit i moderat sobre la solució exacta.
     ax1.plot(x, T_ana, "k-", label=r"$\hat{T}_\mathrm{ana}$")
-    ax1.plot(x, T_050, "s", color="C0", markevery=5, ms=3, label=r"$r = 0.50$")
-    ax1.plot(x, T_025, "o", color="C2", markevery=5, ms=3, label=r"$r = 0.25$")
+    ax1.plot(x, T_050, "s", color="C0", markevery=5, ms=3, label=r"$\gamma = 0.50$")
+    ax1.plot(x, T_025, "o", color="C2", markevery=5, ms=3, label=r"$\gamma = 0.25$")
     ax1.set_xlabel(r"$\hat{x}$")
     ax1.set_ylabel(r"$\hat{T}(\hat{x}, \hat{t}_a)$")
     ax1.legend(loc="lower center")
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     # Gràfica (b): cas amb dt / dx^2 gran a part, per observar-ne el perfil
     # i l'efecte d'un pas temporal més llarg sobre la solució exacta.
     ax2.plot(x, T_ana, "k-", label=r"$\hat{T}_\mathrm{ana}$")
-    ax2.plot(x, T_200, "^", color="C3", markevery=5, ms=3, label=r"$r = 2.00$")
+    ax2.plot(x, T_200, "^", color="C3", markevery=5, ms=3, label=r"$\gamma = 2.00$")
     ax2.set_xlabel(r"$\hat{x}$")
     ax2.set_ylabel(r"$\hat{T}(\hat{x}, \hat{t}_a)$")
     ax2.legend(loc="lower center", ncol=2, columnspacing=1.0, handletextpad=0.4)
@@ -121,9 +121,9 @@ if __name__ == "__main__":
 
     # Gràfica (c): els tres errors amb l'eix vertical en escala logarítmica
     # (semilogy) als punts interiors x[1:-1] (a les fronteres l'error és 0).
-    ax3.semilogy(x[1:-1], err_200[1:-1], color="C3", label=r"$r = 2.00$")
-    ax3.semilogy(x[1:-1], err_050[1:-1], color="C0", label=r"$r = 0.50$")
-    ax3.semilogy(x[1:-1], err_025[1:-1], color="C2", label=r"$r = 0.25$")
+    ax3.semilogy(x[1:-1], err_200[1:-1], color="C3", label=r"$\gamma = 2.00$")
+    ax3.semilogy(x[1:-1], err_050[1:-1], color="C0", label=r"$\gamma = 0.50$")
+    ax3.semilogy(x[1:-1], err_025[1:-1], color="C2", label=r"$\gamma = 0.25$")
     ax3.set_xlabel(r"$\hat{x}$")
     ax3.set_ylabel(r"$|\hat{T}_\mathrm{num}-\hat{T}_\mathrm{ana}|$")
     ax3.set_ylim(1e-7, 1e2)
