@@ -1,26 +1,28 @@
 
-#aplicació del mètode d'Euler implicit per aproximar numèricament la solució
-#la edp que volem resoldre és df/dt = d^2f/dx^2 + 1
-#aproximem les derivades com df/dt=(f_(m+1) - f_(m))/(dt)  i   d^2f/dx^2 = (f(i-1)-2f(i)+f(i+1))/(dx^2)
-#on els index m es refereixen als passos temporals i els index i als espacials i reordenem per poder evaluar la derivada espacial en el pas de temps següent per cada iteració
-
-
+""""
+Aplicació del mètode d'Euler implicit per aproximar numèricament la solució
+la edp que volem resoldre és df/dt = d^2f/dx^2 + 1
+aproximem les derivades com df/dt=(f_(m+1) - f_(m))/(dt)  i   d^2f/dx^2 = (f(i-1)-2f(i)+f(i+1))/(dx^2)
+on els index m es refereixen als passos temporals i els index i als espacials i reordenem per poder evaluar 
+la derivada espacial en el pas de temps següent per cada iteració.
+Es resol el sistema
+tridiagonal resultant amb el mètode iteratiu de Gauss-Seidel.
+"""
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.linalg import solve_banded
-
 
 from parametres import N, t_a
 from sol_analitica import T_analitica, error
 from estil_figures import desa
+from gauss_seidel import gauss_seidel
 
 
-# definim Rep el nombre de punts (N), el pas de temps (dt) i el temps
-# final (t_a).
-def resol(N, dt, t_a):
+# Aplicació del mètode d'Euler implícit amb Gauss-Seidel. Rep el nombre de punts (N),
+# el pas de temps (dt) i el temps final (t_a).
+def resol(N, dt, t_a, tol=1e-10, max_iter=10000):
 
-    # Distància entre punts. Hi ha N punts entre 0 i 1, per tant
+    # Distància entre dos punts veïns. Hi ha N punts entre 0 i 1, per tant
     # N - 1 espais entre ells.
     dx = 1 / (N - 1)
 
@@ -50,25 +52,25 @@ def resol(N, dt, t_a):
     # Definim la matriu tridiagonal a partir de l'equació: 
     #   -r * T_{j-1}^{k+1} + (1 + 2*r) * T_j^{k+1} - r * T_{j+1}^{k+1} = T_j^k + dt
     # que ve d'aplicar l'aproximació en les derivades de la edp i reordenar.
-    ab = np.zeros((3, M))
-    ab[0, 1:] = -r     #supradiagonal
-    ab[1, :] = 1 + 2 * r    #diagonal pura
-    ab[2, :-1] = -r   #subdiagonal
+    a = np.full(M, -r)          # subdiagonal (a[0] no es fa servir)
+    b = np.full(M, 1.0 + 2.0 * r)  # diagonal principal
+    c = np.full(M, -r)          # superdiagonal (c[-1] no es fa servir)
 
-    # Aquest bucle fa que s'avanci un pas temporal a cada iteració.
+    # Aquest bucle fa un pas de temps a cada iteració.
     for pas in range(n_passos):
 
-        # Termes independents per als punts interiors a partir del pas anterior.
-        rhs = T_vella[1:-1] + dt
+        # Terme independent d per als punts interiors a partir del pas anterior.
+        d = T_vella[1:-1] + dt
 
-        # Resolem el sistema lineal tridiagonal i guardem el nou perfil de temperatures.
+        # Resolem el sistema tridiagonal iterativament partint de T_vella[1:-1].
         T_nova = np.zeros(N)
-        T_nova[1:-1] = solve_banded((1, 1), ab, rhs)
+        T_nova[1:-1], _ = gauss_seidel(
+            a, b, c, d, T_vella[1:-1], tol=tol, max_iter=max_iter
+        )
         T_vella = T_nova
 
     # Retornem les posicions i la temperatura final (a t = t_a).
     return x, T_vella
-
 
 
 if __name__ == "__main__":
@@ -76,8 +78,7 @@ if __name__ == "__main__":
     # Distància entre punts veïns, per calcular els dt dels tres casos.
     dx = 1 / (N - 1)
 
-    # Tres valors de dt / dx^2 per comparar el comportament del mètode implícit
-    # (incloent-hi passos temporals més grans on l'explícit seria inestable).
+    # Tres valors de dt / dx^2 per comparar el comportament del mètode implícit.
     x, T_025 = resol(N, 0.25 * dx**2, t_a)
     x, T_050 = resol(N, 0.50 * dx**2, t_a)
     x, T_200 = resol(N, 2.00 * dx**2, t_a)
@@ -97,8 +98,7 @@ if __name__ == "__main__":
     print("error màxim 0.50:", err_050.max())
     print("error màxim 2.00:", err_200.max())
 
-    # Creem una figura amb 3 gràfiques una al costat de l'altra. fig és tota
-    # la figura i ax1, ax2, ax3 són les tres gràfiques.
+    # Creem una figura amb 3 gràfiques una al costat de l'altra.
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(6.8, 2.4))
 
     # Gràfica (a): casos amb dt / dx^2 petit i moderat sobre la solució exacta.
@@ -110,8 +110,7 @@ if __name__ == "__main__":
     ax1.legend(loc="lower center")
     ax1.text(0.04, 0.93, "(a)", transform=ax1.transAxes, ha="left", va="top")
 
-    # Gràfica (b): cas amb dt / dx^2 gran a part, per observar-ne el perfil
-    # i l'efecte d'un pas temporal més llarg sobre la solució exacta.
+    # Gràfica (b): cas amb dt / dx^2 gran a part.
     ax2.plot(x, T_ana, "k-", label=r"$\hat{T}_\mathrm{ana}$")
     ax2.plot(x, T_200, "^", color="C3", markevery=5, ms=3, label=r"$\gamma = 2.00$")
     ax2.set_xlabel(r"$\hat{x}$")
@@ -119,8 +118,7 @@ if __name__ == "__main__":
     ax2.legend(loc="lower center", ncol=2, columnspacing=1.0, handletextpad=0.4)
     ax2.text(0.04, 0.93, "(b)", transform=ax2.transAxes, ha="left", va="top")
 
-    # Gràfica (c): els tres errors amb l'eix vertical en escala logarítmica
-    # (semilogy) als punts interiors x[1:-1] (a les fronteres l'error és 0).
+    # Gràfica (c): els tres errors en escala logarítmica als punts interiors.
     ax3.semilogy(x[1:-1], err_200[1:-1], color="C3", label=r"$\gamma = 2.00$")
     ax3.semilogy(x[1:-1], err_050[1:-1], color="C0", label=r"$\gamma = 0.50$")
     ax3.semilogy(x[1:-1], err_025[1:-1], color="C2", label=r"$\gamma = 0.25$")
