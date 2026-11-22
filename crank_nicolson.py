@@ -1,7 +1,7 @@
 
 
 import numpy as np
-from figures.gauss_seidel import gauss_seidel
+from gauss_seidel import gauss_seidel
 
 """
 Apliquem el mètode de Crank-Nicolson a l'equació de la calor ja adimensionalitzada:
@@ -58,47 +58,47 @@ def resol_cn(N, dt, t_a):
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
+    from parametres import N, t_a
+    from sol_analitica import T_analitica, error
+    from estil_figures import desa
 
-    N = 101
-    t_a = 0.025
     dx = 1.0 / (N - 1)
 
-    # Els dos casos que demana l'enunciat
-    casos = {
-        r"$\Delta\hat{t} = (\Delta\hat{x})^2$": dx**2,
-        r"$\Delta\hat{t} = 0.5(\Delta\hat{x})^2$": 0.5 * dx**2,
-    }
+    #Els dos casos que demana l'enunciat.
+    casos = [
+        (1.0, r"$\Delta\hat{t} = (\Delta\hat{x})^2$", "-"),
+        (0.5, r"$\Delta\hat{t} = 0.5\,(\Delta\hat{x})^2$", "--"),
+    ]
 
-    # Si el company ja ha fet analitica.py, també dibuixem l'error.
-    try:
-        from figures.analitica import T_analitica
-        hi_ha_analitica = True
-    except ImportError:
-        hi_ha_analitica = False
-        print("Encara no hi ha analitica.py: només es dibuixa la solució.")
+    # Solució analítica als mateixos punts i al mateix instant
+    x = np.linspace(0, 1, N)
+    T_ana = T_analitica(x, t_a)
 
-    if hi_ha_analitica:
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
-    else:
-        fig, ax1 = plt.subplots(figsize=(5, 4))
+    fig_sol, ax_sol = plt.subplots()     # figura 1: solucions
+    fig_err, ax_err = plt.subplots()     # figura 2: errors
 
-    for etiqueta, dt in casos.items():
-        x, T = resol_cn(N, dt, t_a)
-        print(f"{etiqueta}: T màxima = {T.max():.6f} a x = {x[T.argmax()]:.2f}")
-        ax1.plot(x, T, label=etiqueta)
+    # L'analítica es dibuixa amb punts per distingir-la de les numèriques
+    ax_sol.plot(x[::5], T_ana[::5], "ko", markersize=3, label="Analítica")
 
-        if hi_ha_analitica:
-            T_ana = T_analitica(x, t_a)
-            ax2.plot(x, np.abs(T - T_ana), label=etiqueta)
+    for factor, etiqueta, linia in casos:
+        dt = factor * dx**2
+        x, T_cn = resol_cn(N, dt, t_a)
+        err = error(T_cn, T_ana)
 
-    ax1.set_xlabel(r"$\hat{x}$")
-    ax1.set_ylabel(r"$\hat{T}$")
-    ax1.legend()
+        print(f"dt = {factor} dx^2:  error màxim = {err.max():.2e}")
 
-    if hi_ha_analitica:
-        ax2.set_xlabel(r"$\hat{x}$")
-        ax2.set_ylabel(r"$|\hat{T}_{\mathrm{CN}} - \hat{T}_{\mathrm{an}}|$")
-        ax2.legend()
+        ax_sol.plot(x, T_cn, linia, label=etiqueta)
+        # A les fronteres l'error és exactament 0 i log(0) no existeix: les ometem
+        ax_err.semilogy(x[1:-1], err[1:-1], linia, label=etiqueta)
 
-    plt.tight_layout()
+    ax_sol.set_xlabel(r"$\hat{x}$")
+    ax_sol.set_ylabel(r"$\hat{T}(\hat{x}, \hat{t}_a)$")
+    ax_sol.legend(loc="lower center")
+
+    ax_err.set_xlabel(r"$\hat{x}$")
+    ax_err.set_ylabel(r"$|\hat{T}_\mathrm{CN} - \hat{T}_\mathrm{ana}|$")
+    ax_err.legend(loc="lower center")
+
+    desa(fig_sol, "cn_solucio")
+    desa(fig_err, "cn_error")
     plt.show()
