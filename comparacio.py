@@ -1,9 +1,8 @@
-"""
-Compara el nombre mitjà d'iteracions de Gauss-Seidel per pas de temps segons el punt
-de partida: la temperatura del pas anterior (el que fem servir) o zero.
-Els resultats s'expliquen al apartat de Gauss-Seidel de l'informe.
-"""
 
+"""
+Compara els tres mètodes (Euler explícit, Euler implícit i Crank-Nicolson) amb la
+solució analítica, error punt a punt amb gamma = 0.5 i error màxim en funció de dt.
+"""
 
 import numpy as np
 import matplotlib.pyplot as plt
