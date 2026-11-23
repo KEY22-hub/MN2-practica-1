@@ -1,3 +1,10 @@
+"""
+Compara el nombre mitjà d'iteracions de Gauss-Seidel per pas de temps segons el punt
+de partida: la temperatura del pas anterior (el que fem servir) o zero.
+Els resultats s'expliquen al apartat de Gauss-Seidel de l'informe.
+"""
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 

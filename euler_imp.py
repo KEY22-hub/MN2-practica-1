@@ -72,7 +72,8 @@ def resol_imp(N, dt, t_a, tol=1e-10, max_iter=10000):
     # Retornem les posicions i la temperatura final (a t = t_a).
     return x, T_vella
 
-
+# Tot el que hi ha dins d'aquest if només s'executa quan corres aquest
+# fitxer directament. Si un altre fitxer importa resol_imp(), no s'executa.
 if __name__ == "__main__":
 
     # Distància entre punts veïns, per calcular els dt dels tres casos.

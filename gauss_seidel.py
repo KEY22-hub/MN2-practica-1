@@ -51,7 +51,7 @@ def gauss_seidel(a, b, c, d, x0, tol=1e-10, max_iter=10000):
     return x, max_iter
 
 
-def multiplica_tridiagonal(a, b, c, x):
+def multiplica_tridiagonal(a, b, c, x): # La vam definir per fer proves, no es fa servir
     """Calcula A x per a una matriu tridiagonal (només per fer proves)."""
     n = len(b)
     y = b * x
