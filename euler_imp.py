@@ -112,7 +112,7 @@ if __name__ == "__main__":
 
     # Gràfica (b): cas amb dt / dx^2 gran a part.
     ax2.plot(x, T_ana, "k-", label=r"$\hat{T}_\mathrm{ana}$")
-    ax2.plot(x, T_100, "^", color="C3", markevery=5, ms=3, label=r"$\gamma = 2.00$")
+    ax2.plot(x, T_100, "^", color="C3", markevery=5, ms=3, label=r"$\gamma = 1.00$")
     ax2.set_xlabel(r"$\hat{x}$")
     ax2.set_ylabel(r"$\hat{T}(\hat{x}, \hat{t}_a)$")
     ax2.legend(loc="lower center", ncol=2, columnspacing=1.0, handletextpad=0.4)
