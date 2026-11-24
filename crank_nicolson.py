@@ -55,7 +55,8 @@ def resol_cn(N, dt, t_a):
 
     return x, T
 
-
+# Tot el que hi ha dins d'aquest if només s'executa quan corres aquest
+# fitxer directament. Si un altre fitxer importa resol_cn(), no s'executa.
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from parametres import N, t_a

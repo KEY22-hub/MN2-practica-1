@@ -64,7 +64,7 @@ def resol_exp(N, dt, t_a):
 
 
 # Tot el que hi ha dins d'aquest if només s'executa quan corres aquest
-# fitxer directament. Si un altre fitxer importa resol(), no s'executa.
+# fitxer directament. Si un altre fitxer importa resol_exp(), no s'executa.
 if __name__ == "__main__":
 
     # Distància entre punts veïns, per calcular els dt dels tres casos.

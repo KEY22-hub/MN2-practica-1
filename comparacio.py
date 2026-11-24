@@ -1,3 +1,9 @@
+
+"""
+Compara els tres mètodes (Euler explícit, Euler implícit i Crank-Nicolson) amb la
+solució analítica, error punt a punt amb gamma = 0.5 i error màxim en funció de dt.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 

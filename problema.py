@@ -9,7 +9,7 @@ Condicions:
     - el teixit sa no ha d'arribar mai a 50 ºC
     - cap punt ha d'arribar mai a 80 ºC
 Com més temps escalfem, més temps passa la zona malalta per sobre de 50 ºC, 
-que és el es necessita pel tractament, així que l'òptim és el temps d'aplicació 
+que és el que es necessita pel tractament, així que l'òptim és el temps d'aplicació 
 més llarg que compleix les condicions.
 """
 
@@ -65,7 +65,7 @@ def simula(n_on, aturar_si_sa_supera=False):
         # pugui entrar en joc, cosa que ens serveix per filtrar els casos vàlids.
         # Si la deixem en False aquesta condició no es complirà mai i la simulació segueix.
         if i >= n_on and T.max() < T_hat_mort:
-            break # Aquesta condició es compleix sempre, diu que si la font és apagada i 
+            break # Aquesta condició es comproba sempre, diu que si la font és apagada i 
                   # tot el teixit es troba per sota 50 ºC, que parem la simulació.
 
     t = np.arange(len(historia)) * dt # Tots els instants de temps en unitats de dt.
@@ -74,7 +74,7 @@ def simula(n_on, aturar_si_sa_supera=False):
                                  # instants de temps i per columnes els punts del teixit
 
 
-def es_valid(n_on): # Només retorna la matriu H=np.array(historia) si el cas es vàlid
+def es_valid(n_on): # Retorna True si, encenent la font n_on passos, es compleixen les dues condicions.
     #True si, encenent la font n_on passos, es compleixen les dues condicions.
     _, H = simula(n_on, aturar_si_sa_supera=True)
     return H[:, sa].max() < T_hat_mort and H.max() < T_hat_limit
@@ -111,9 +111,9 @@ if __name__ == "__main__":
           f"{a_segons(dins[:, malalt.sum() // 2].sum() * dt):.1f} s")
     print(f"Fracció de la zona malalta que arriba a 50 °C: {dins.any(axis=0).mean():.2f}")
 
-    # --- Figura 1: perfils de temperatura a diversos instants ---
+    # Figura 1: perfils de temperatura a diversos instants
     fig1, ax1 = plt.subplots()
-    for frac in [0.5, 0.8, 1.0]: #calculem 3 casos, un on la meitat del teixit reb el tractament, un on el 80% i un altre on el 100%, el cas optim
+    for frac in [0.5, 0.8, 1.0]: # Perfils a la meitat, al 80 % i al final del temps d'aplicació.
         k = round(frac * n_opt)
         ax1.plot(L * 100 * x, a_celsius(H[k]), label=f"$t = {a_segons(t[k]):.0f}$ s")
     ax1.axhline(50, color="k", ls="--", lw=0.8)
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     ax1.legend(loc="lower center")
     desa(fig1, "problema_perfils")
 
-    # --- Figura 2: evolució al centre i al punt sa més proper ---
+    # Figura 2: evolució al centre i al punt sa més proper
     fig2, ax2 = plt.subplots()
     ax2.plot(a_segons(t), a_celsius(H[:, j_centre]), label=r"centre ($x = 1$ cm)")
     ax2.plot(a_segons(t), a_celsius(H[:, j_sa]), "--",
